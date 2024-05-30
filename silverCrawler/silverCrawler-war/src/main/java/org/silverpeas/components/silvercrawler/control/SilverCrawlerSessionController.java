@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.silvercrawler.control;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.silverpeas.components.silvercrawler.model.FileDetail;
@@ -588,7 +589,7 @@ public class SilverCrawlerSessionController extends AbstractComponentSessionCont
 
   public void saveFile(FileItem fileItem, boolean replaceFile)
       throws SilverCrawlerFileUploadException {
-    String name = FileUtil.getFilename(fileItem.getName());
+    String name = FileUtil.getFilename(Filenames.toSimpleFileName(fileItem.getName()));
     if (StringUtil.isDefined(name)) {
       // compute full path
       String fullPath = getFullPath(name);

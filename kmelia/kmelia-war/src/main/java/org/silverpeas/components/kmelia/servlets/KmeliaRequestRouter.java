@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.kmelia.servlets;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.silverpeas.components.kmelia.KmeliaConstants;
 import org.silverpeas.components.kmelia.SearchContext;
@@ -1675,7 +1676,7 @@ public class KmeliaRequestRouter extends ComponentRequestRouter<KmeliaSessionCon
       fileItem = FileUploadUtil.getFile(items, "file_name");
 
       if (fileItem != null) {
-        logicalName = fileItem.getName();
+        logicalName = Filenames.toSimpleFileName(fileItem.getName());
         if (logicalName != null) {
           boolean runOnUnix = !FileUtil.isWindows();
           if (runOnUnix) {

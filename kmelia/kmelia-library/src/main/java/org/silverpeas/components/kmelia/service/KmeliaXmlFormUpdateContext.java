@@ -24,6 +24,7 @@
 
 package org.silverpeas.components.kmelia.service;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.silverpeas.components.kmelia.model.KmaxRuntimeException;
 import org.silverpeas.components.kmelia.model.KmeliaRuntimeException;
@@ -121,7 +122,7 @@ public class KmeliaXmlFormUpdateContext {
             if (FileField.TYPE.equals(field.getTypeName())) {
               final String inputName = Util.getFieldOccurrenceName(field.getName(), field.getOccurrence());
               final FileItem item = FileUploadUtil.getFile(items, inputName);
-              if (item != null && !item.isFormField() && StringUtil.isDefined(item.getName())) {
+              if (item != null && !item.isFormField() && StringUtil.isDefined(Filenames.toSimpleFileName(item.getName()))) {
                 return Pair.of(item, (FileField) field);
               } else {
                 return Pair.of((FileItem) null, (FileField) field);

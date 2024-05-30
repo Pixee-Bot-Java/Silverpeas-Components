@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.survey.control;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.silverpeas.components.survey.SurveyException;
 import org.silverpeas.components.survey.notification.SurveyUserNotification;
@@ -1024,7 +1025,7 @@ public class SurveySessionController extends AbstractComponentSessionController 
     QuestionContainerDetail survey = this.getSessionSurvey();
     try {
       Date creationDate = new Date();
-      String filename = fileSynthesis.getName();
+      String filename = Filenames.toSimpleFileName(fileSynthesis.getName());
       SimpleAttachment file = SimpleAttachment.builder(I18NHelper.DEFAULT_LANGUAGE)
           .setFilename(FileUtil.getFilename(filename))
           .setTitle(filename)
@@ -1117,7 +1118,7 @@ public class SurveySessionController extends AbstractComponentSessionController 
   }
 
   private String getFilePhysicalName(final int attachmentSuffix, final FileItem item) {
-    String logicalName = item.getName();
+    String logicalName = Filenames.toSimpleFileName(item.getName());
     String type = logicalName.substring(logicalName.indexOf('.') + 1, logicalName.length());
     return Long.toString(new Date().getTime()) + attachmentSuffix + "." + type;
   }

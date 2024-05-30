@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.gallery.process;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.silverpeas.components.gallery.Watermark;
 import org.silverpeas.components.gallery.constant.MediaMimeType;
@@ -124,7 +125,7 @@ public class GalleryProcessManagement {
       final MediaDataUpdateDelegate delegate) {
     processList.add(GalleryUpdateMediaDataProcess.getInstance(media, delegate));
     final FileItem fileItem = delegate.getFileItem();
-    if (fileItem != null && StringUtil.isDefined(fileItem.getName())) {
+    if (fileItem != null && StringUtil.isDefined(Filenames.toSimpleFileName(fileItem.getName()))) {
       processList.add(GalleryUpdateMediaFileProcess
           .getInstance(media, fileItem, watermark));
       processList.add(GalleryUpdateMediaDataProcess.getInstance(media));

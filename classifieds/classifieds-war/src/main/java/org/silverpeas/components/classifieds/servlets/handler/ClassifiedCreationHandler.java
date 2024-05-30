@@ -24,6 +24,7 @@
 
 package org.silverpeas.components.classifieds.servlets.handler;
 
+import io.github.pixee.security.Filenames;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -75,7 +76,7 @@ public class ClassifiedCreationHandler extends FunctionHandler {
       Collection<FileItem> listImage = new ArrayList<>();
       for (int i = 1; i <= NB_IMAGES; i++) {
         FileItem fileImage = request.getFile("Image"+i);
-        if (fileImage != null && StringUtil.isDefined(fileImage.getName())) {
+        if (fileImage != null && StringUtil.isDefined(Filenames.toSimpleFileName(fileImage.getName()))) {
           listImage.add(fileImage);
         }
       }

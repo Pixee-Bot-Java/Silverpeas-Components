@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.blog.control;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.silverpeas.components.blog.access.BlogPostWriteAccessControl;
@@ -549,7 +550,7 @@ public final class BlogSessionController extends AbstractComponentSessionControl
    */
   public void saveWallPaperFile(FileItem fileItemWallPaper) {
     //extension
-    String extension = FileRepositoryManager.getFileExtension(fileItemWallPaper.getName());
+    String extension = FileRepositoryManager.getFileExtension(Filenames.toSimpleFileName(fileItemWallPaper.getName()));
     if (extension != null && "jpeg".equalsIgnoreCase(extension)) {
       extension = "jpg";
     }
@@ -558,7 +559,7 @@ public final class BlogSessionController extends AbstractComponentSessionControl
         (!"gif".equalsIgnoreCase(extension) && !"jpg".equalsIgnoreCase(extension) &&
             !"png".equalsIgnoreCase(extension))) {
       throw new BlogRuntimeException(
-          fileItemWallPaper.getName() + " wallpaper format isn't supported");
+          Filenames.toSimpleFileName(fileItemWallPaper.getName()) + " wallpaper format isn't supported");
     }
 
     //path to create the file
@@ -670,10 +671,10 @@ public final class BlogSessionController extends AbstractComponentSessionControl
    */
   public void saveStyleSheetFile(FileItem fileItemStyleSheet) {
     //extension
-    String extension = FileRepositoryManager.getFileExtension(fileItemStyleSheet.getName());
+    String extension = FileRepositoryManager.getFileExtension(Filenames.toSimpleFileName(fileItemStyleSheet.getName()));
     if (!"css".equalsIgnoreCase(extension)) {
       throw new BlogRuntimeException(
-          fileItemStyleSheet.getName() + " isn't a supported stylesheet");
+          Filenames.toSimpleFileName(fileItemStyleSheet.getName()) + " isn't a supported stylesheet");
     }
 
     //path to create the file
