@@ -4,6 +4,7 @@
  */
 package org.silverpeas.components.kmelia.servlets;
 
+import io.github.pixee.security.Newlines;
 import org.apache.commons.io.IOUtils;
 import org.silverpeas.components.kmelia.control.KmeliaSessionController;
 import org.silverpeas.core.contribution.converter.DocumentFormat;
@@ -76,8 +77,8 @@ public class KmeliaPublicationExportServlet extends HttpServlet {
     String fileName = ClientBrowserUtil.rfc2047EncodeFilename(request, exportFile.getName());
     try (InputStream in = new FileInputStream(exportFile);
          OutputStream out = response.getOutputStream()) {
-      response.setHeader("Content-Length", String.valueOf(exportFile.length()));
-      response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + "\"");
+      response.setHeader("Content-Length", Newlines.stripAll(String.valueOf(exportFile.length())));
+      response.setHeader("Content-Disposition", Newlines.stripAll("inline; filename=\"" + fileName + "\""));
       IOUtils.copy(in, out);
     }
   }
@@ -94,9 +95,9 @@ public class KmeliaPublicationExportServlet extends HttpServlet {
          OutputStream out = response.getOutputStream()) {
       String documentName = ClientBrowserUtil.rfc2047EncodeFilename(request, generatedDocument.
           getName());
-      response.setHeader("Content-Disposition", "inline; filename=\"" + documentName + "\"");
+      response.setHeader("Content-Disposition", Newlines.stripAll("inline; filename=\"" + documentName + "\""));
       response.setContentType(format.getMimeType());
-      response.setHeader("Content-Length", String.valueOf(generatedDocument.length()));
+      response.setHeader("Content-Length", Newlines.stripAll(String.valueOf(generatedDocument.length())));
       IOUtils.copy(in, out);
     } finally {
       if (generatedDocument != null) {
