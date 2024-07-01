@@ -362,12 +362,12 @@ public class InfoLetterDataManager implements InfoLetterService {
     try (Connection con = openConnection()) {
       InfoLetter letter = getInfoLetter(letterPK);
       String selectQuery =
-          "SELECT * FROM " + TABLE_EXTERNAL_EMAILS + " where instanceId = '" +
-              letter.getInstanceId() + "' " + "and letter = " + letterPK.getId() + " ";
+          "SELECT * FROM " + TABLE_EXTERNAL_EMAILS + " where instanceId = ? and letter = " + letterPK.getId() + " ";
 
-      try (Statement selectStmt = con.createStatement()) {
-        //noinspection SqlSourceToSinkFlow
-        try (ResultSet rs = selectStmt.executeQuery(selectQuery)) {
+      try (PreparedStatement selectStmt = con.prepareStatement(selectQuery)) {
+        
+        selectStmt.setString(1, letter.getInstanceId());
+        try (ResultSet rs = selectStmt.execute()) {
           while (rs.next()) {
             emails.add(rs.getString("email"));
           }
