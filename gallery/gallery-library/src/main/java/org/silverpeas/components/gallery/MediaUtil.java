@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.gallery;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.silverpeas.components.gallery.constant.MediaMimeType;
@@ -146,7 +147,7 @@ public class MediaUtil {
   public static synchronized void processSound(final FileHandler fileHandler, Sound sound,
       final FileItem fileItem) throws Exception {
     if (fileItem != null) {
-      String name = fileItem.getName();
+      String name = Filenames.toSimpleFileName(fileItem.getName());
       if (name != null) {
         try {
           sound.setFileName(StringUtil.normalize(FileUtil.getFilename(name)));
@@ -191,7 +192,7 @@ public class MediaUtil {
   public static synchronized void processVideo(final FileHandler fileHandler, Video video,
       final FileItem fileItem) throws Exception {
     if (fileItem != null) {
-      String name = fileItem.getName();
+      String name = Filenames.toSimpleFileName(fileItem.getName());
       if (name != null) {
         try {
           video.setFileName(StringUtil.normalize(FileUtil.getFilename(name)));
@@ -241,7 +242,7 @@ public class MediaUtil {
       String name = image.getName();
       if (name != null) {
         try {
-          photo.setFileName(StringUtil.normalize(image.getName()));
+          photo.setFileName(StringUtil.normalize(Filenames.toSimpleFileName(image.getName())));
           final HandledFile handledImageFile = getHandledFile(fileHandler, photo);
           handledImageFile.copyInputStreamToFile(image.getInputStream());
           new PhotoProcess(handledImageFile, photo, watermark).process();

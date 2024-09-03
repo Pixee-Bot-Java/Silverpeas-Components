@@ -48,6 +48,7 @@
 
 package org.silverpeas.components.survey.servlets;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.silverpeas.components.survey.SurveyException;
 import org.silverpeas.components.survey.control.SurveySessionController;
@@ -246,13 +247,13 @@ public class SurveyRequestRouter extends ComponentRequestRouter<SurveySessionCon
             FileUploadUtil.getParameter(items, "removeSynthesisFile");  //yes | no
         FileItem fileSynthesis = FileUploadUtil.getFile(items, "synthesisNewFile");
         if (idSynthesisFile == null && fileSynthesis != null &&
-            StringUtil.isDefined(fileSynthesis.getName())) {//Create Document
+            StringUtil.isDefined(Filenames.toSimpleFileName(fileSynthesis.getName()))) {//Create Document
           surveySC.saveSynthesisFile(fileSynthesis);
         } else if (idSynthesisFile != null && fileSynthesis != null &&
-            StringUtil.isDefined(fileSynthesis.getName())) {//Update Document
+            StringUtil.isDefined(Filenames.toSimpleFileName(fileSynthesis.getName()))) {//Update Document
           surveySC.updateSynthesisFile(fileSynthesis, idSynthesisFile);
         } else if (idSynthesisFile != null && fileSynthesis != null &&
-            !StringUtil.isDefined(fileSynthesis.getName()) &&
+            !StringUtil.isDefined(Filenames.toSimpleFileName(fileSynthesis.getName())) &&
             "yes".equals(removeSynthesisFile)) {//Delete Document
           surveySC.removeSynthesisFile(idSynthesisFile);
         }

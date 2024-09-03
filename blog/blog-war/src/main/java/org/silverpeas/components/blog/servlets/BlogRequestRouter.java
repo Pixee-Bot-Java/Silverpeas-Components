@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.blog.servlets;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.silverpeas.components.blog.control.BlogSessionController;
 import org.silverpeas.components.blog.model.Category;
@@ -341,14 +342,14 @@ public class BlogRequestRouter extends ComponentRequestRouter<BlogSessionControl
         FileItem fileWallPaper = request.getFile("wallPaper");
         FileItem fileStyleSheet = request.getFile("styleSheet");
 
-        if (fileWallPaper != null && StringUtil.isDefined(fileWallPaper.getName())) {
+        if (fileWallPaper != null && StringUtil.isDefined(Filenames.toSimpleFileName(fileWallPaper.getName()))) {
           //Update
           blogSC.saveWallPaperFile(fileWallPaper);
         } else if ("yes".equals(removeWallPaperFile)) {
           //Remove
           blogSC.removeWallPaperFile();
         }
-        if (fileStyleSheet != null && StringUtil.isDefined(fileStyleSheet.getName())) {
+        if (fileStyleSheet != null && StringUtil.isDefined(Filenames.toSimpleFileName(fileStyleSheet.getName()))) {
           //Update
           blogSC.saveStyleSheetFile(fileStyleSheet);
         } else if ("yes".equals(removeStyleSheetFile)) {
