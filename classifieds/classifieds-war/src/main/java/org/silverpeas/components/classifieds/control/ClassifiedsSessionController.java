@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.classifieds.control;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.silverpeas.components.classifieds.ClassifiedsComponentSettings;
 import org.silverpeas.components.classifieds.model.ClassifiedDetail;
@@ -595,7 +596,7 @@ public final class ClassifiedsSessionController extends AbstractComponentSession
 
       // create SimpleDocument Object
       Date creationDate = new Date();
-      String fileName = FileUtil.getFilename(fileImage.getName());
+      String fileName = FileUtil.getFilename(Filenames.toSimpleFileName(fileImage.getName()));
       long size = fileImage.getSize();
       String mimeType = FileUtil.getMimeType(fileName);
 
@@ -664,7 +665,7 @@ public final class ClassifiedsSessionController extends AbstractComponentSession
 
     if (classifiedImage != null) {
       Date updateDate = new Date();
-      String fileName = FileUtil.getFilename(fileImage.getName());
+      String fileName = FileUtil.getFilename(Filenames.toSimpleFileName(fileImage.getName()));
       long size = fileImage.getSize();
       String mimeType = FileUtil.getMimeType(fileName);
 

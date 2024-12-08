@@ -24,6 +24,7 @@
 
 package org.silverpeas.components.classifieds.servlets.handler;
 
+import io.github.pixee.security.Filenames;
 import java.util.List;
 
 import org.apache.commons.fileupload.FileItem;
@@ -116,11 +117,11 @@ public class ClassifiedUpdateHandler extends FunctionHandler {
   private void processImage(String imageId, boolean removeIt, FileItem fileImage,
       String classifiedId, ClassifiedsSessionController classifiedsSC) {
     if (fileImage != null) {
-      if (imageId == null && StringUtil.isDefined(fileImage.getName())) {
+      if (imageId == null && StringUtil.isDefined(Filenames.toSimpleFileName(fileImage.getName()))) {
         classifiedsSC.createClassifiedImage(fileImage, classifiedId);
-      } else if (imageId != null && StringUtil.isDefined(fileImage.getName())) {
+      } else if (imageId != null && StringUtil.isDefined(Filenames.toSimpleFileName(fileImage.getName()))) {
         classifiedsSC.updateClassifiedImage(fileImage, imageId, classifiedId);
-      } else if (imageId != null && !StringUtil.isDefined(fileImage.getName()) && removeIt) {
+      } else if (imageId != null && !StringUtil.isDefined(Filenames.toSimpleFileName(fileImage.getName())) && removeIt) {
         classifiedsSC.deleteClassifiedImage(imageId);
       }
     }

@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.gallery.process.media;
 
+import io.github.pixee.security.Filenames;
 import org.apache.commons.fileupload.FileItem;
 import org.silverpeas.components.gallery.MediaUtil;
 import org.silverpeas.components.gallery.Watermark;
@@ -82,7 +83,7 @@ public class GalleryUpdateMediaFileProcess extends AbstractGalleryFileProcess {
 
     // Media
     if (fileItem != null && !getMedia().getType().isStreaming()) {
-      final String name = fileItem.getName();
+      final String name = Filenames.toSimpleFileName(fileItem.getName());
       if (StringUtil.isDefined(name)) {
 
         hasBeenProcessed = true;
