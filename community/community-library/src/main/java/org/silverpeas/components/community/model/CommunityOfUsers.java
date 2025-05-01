@@ -23,6 +23,8 @@
  */
 package org.silverpeas.components.community.model;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.silverpeas.components.community.AlreadyMemberException;
 import org.silverpeas.components.community.repository.CommunityOfUsersRepository;
 import org.silverpeas.core.admin.component.model.InheritableSpaceRoles;
@@ -256,7 +258,7 @@ public class CommunityOfUsers
    * @throws MalformedURLException if the specified URL is malformed.
    */
   public void setCharterURL(final String charterURL) throws MalformedURLException {
-    this.charterURL = new URL(charterURL);
+    this.charterURL = Urls.create(charterURL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
   }
 
   /**
