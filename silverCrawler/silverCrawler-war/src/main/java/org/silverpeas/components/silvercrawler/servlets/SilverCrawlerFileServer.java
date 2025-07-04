@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.silvercrawler.servlets;
 
+import io.github.pixee.security.Newlines;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -131,10 +132,10 @@ public class SilverCrawlerFileServer extends SilverpeasAuthenticatedHttpServlet 
   }
 
   private void sendFile(HttpServletResponse response, File file) throws IOException {
-    response.setHeader("Content-Length", String.valueOf(file.length()));
+    response.setHeader("Content-Length", Newlines.stripAll(String.valueOf(file.length())));
     final String normalizedFilename = StringUtil.normalize(file.getName());
     response.setContentType(FileUtil.getMimeType(normalizedFilename));
-    response.setHeader("Content-Disposition", encodeAttachmentFilenameAsUtf8(normalizedFilename));
+    response.setHeader("Content-Disposition", Newlines.stripAll(encodeAttachmentFilenameAsUtf8(normalizedFilename)));
     try {
       FileUtils.copyFile(file, response.getOutputStream());
       response.getOutputStream().flush();

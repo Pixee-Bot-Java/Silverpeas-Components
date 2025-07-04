@@ -23,6 +23,7 @@
  */
 package org.silverpeas.components.projectmanager.servlets;
 
+import io.github.pixee.security.Newlines;
 import org.silverpeas.components.projectmanager.control.ProjectManagerSessionController;
 import org.silverpeas.components.projectmanager.model.TaskDetail;
 import org.silverpeas.core.util.Charsets;
@@ -131,7 +132,7 @@ public class AjaxProjectManagerServlet extends HttpServlet {
     }
 
     res.setContentType(MimeTypes.XML_MIME_TYPE);
-    res.setHeader("charset", Charsets.UTF_8.name());
+    res.setHeader("charset", Newlines.stripAll(Charsets.UTF_8.name()));
     Writer writer = res.getWriter();
     writer.write(output);
   }
